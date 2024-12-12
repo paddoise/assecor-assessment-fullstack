@@ -1,0 +1,13 @@
+<div class="container header-container filter-container">
+    <select class="drop-down element" (change)="onSelect()" [(ngModel)]="enteredField">
+        <option value="">None</option>
+        <option value="id">ID</option>
+        <option value="color">Favorite color</option>
+    </select>
+    @if (enteredField === 'color') {
+        <app-color-drop-down class="element" (colorEmitter)="setTerm($event)" />
+    } @else {
+        <input [disabled]="enteredField === ''" type="{{inputType}}" placeholder="Term" class="input-field element" [(ngModel)]="enteredTerm">
+    }
+    <button (click)="applyFilter()" class="btn element">Apply filter</button>
+</div>

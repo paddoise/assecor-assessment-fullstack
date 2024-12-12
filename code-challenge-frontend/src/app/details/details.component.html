@@ -1,0 +1,41 @@
+<div>
+    <app-operations (changedState)="setIsAddPerson($event)" />
+    <div class="container details">
+        @if (!isAddPerson()) {
+            @if (currentPerson() !== null && currentPerson() !== undefined) {
+                <h3>{{ currentPerson()?.name }} {{ currentPerson()?.lastname }}</h3>
+                <p>ID: {{ currentPerson()?.id }}</p>
+                <p>Name: {{ currentPerson()?.name }}</p>
+                <p>Lastname: {{ currentPerson()?.lastname }}</p>
+                <p>Zipcode: {{ currentPerson()?.zipcode }}</p>
+                <p>City: {{ currentPerson()?.city }}</p>
+                <p>Favorite Color: {{ currentPerson()?.color }}</p>
+            } @else {
+                <p>No person selected</p>
+            }
+        } @else {
+            <h3>Add New Person</h3>
+            <div class="input-line">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" [(ngModel)]="postName">
+            </div>
+            <div class="input-line">
+                <label for="lastname">Lastname:</label>
+                <input type="text" id="lastname" [(ngModel)]="postLastname">
+            </div>
+            <div class="input-line">
+                <label for="zipcode">Zipcode:</label>
+                <input type="text" id="zipcode"  [(ngModel)]="postZipcode">
+            </div>
+            <div class="input-line">
+                <label for="city">City:</label>
+                <input type="text" id="city"  [(ngModel)]="postCity">
+            </div>
+            <div class="input-line">
+                <label for="color">Favorite Color:</label>
+                <app-color-drop-down id="color" (colorEmitter)="setPostColor($event)" />
+            </div>
+            <button class="btn" (click)="addPerson()">Add Person</button>
+        }
+    </div>
+</div>

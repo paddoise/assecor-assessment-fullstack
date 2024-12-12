@@ -1,0 +1,8 @@
+<div>
+    <app-filter (emitFilter)="applyFilter($event)" />
+    <div class="container person-list">
+        @for (p of persons(); track p.id) {
+            <app-person [person]="p" (selected)="passCurrentPerson($event)" />
+        }
+    </div>
+</div>

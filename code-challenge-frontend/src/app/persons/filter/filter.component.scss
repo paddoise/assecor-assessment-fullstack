@@ -1,0 +1,14 @@
+.element {
+    flex: 1;
+    margin: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 400px) {
+    .filter-container {
+        flex-direction: column;
+        height: 150px;
+        overflow-x: hidden;
+    }
+}

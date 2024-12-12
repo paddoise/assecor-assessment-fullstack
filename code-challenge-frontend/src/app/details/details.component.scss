@@ -1,0 +1,25 @@
+.details {
+    flex-direction: column;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+p {
+    margin: 5px 0;
+    color: #ced4da;
+}
+
+label {
+    flex: 0 0 120px;
+    font-weight: bold;
+    color: #ced4da;
+}
+
+h3 {
+    margin: 0 0 10px;
+    color: #ced4da;
+}

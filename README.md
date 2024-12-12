@@ -1,88 +1,75 @@
-# Fullstack Test (DE)
+# Code Challenge Solution
+This project contains both the backend and the frontend for the code challenge solution.
 
-## Zielsetzung
+## Run
+There are two ways to run the project:
+- Docker / Podman
+- Manually
 
-Das Ziel ist es ein REST – Interface zu implementieren und dieses in einer Webanwendung aufzurufen und die Daten zu visualisieren. Für die REST Schnittstelle stehen .NET(C#) oder Java und die Webanwendung mit Angular oder React als Frameworks zur Verfügung. Dabei sind die folgenden Anforderungen zu erfüllen:
+### Docker / Podman
+The project can be run with Docker Compose or Podman Compose. This section will only use `docker` commands, but it can be replaced by `podman` commands.
 
-* Es soll möglich sein, Personen und ihre Lieblingsfarbe über das Interface zu verwalten
-* Die Daten sollen aus einer CSV Datei lesbar sein, ohne dass die CSV angepasst werden muss
-* Alle Personen mit exakten Lieblingsfarben können über das Interface identifiziert werden
-* Übersichts- und die Detailseiten sollen in der Webanwendung visualisiert sein
-* Die Daten auf der Übersichtsseite sollen filter- und sortierbar sein
-
-Einige Beispieldatensätze finden sich in `sample-input.csv`. Die Zahlen der ersten Spalte sollen den folgenden Farben entsprechen:
-
-| ID | Farbe |
-| --- | --- |
-| 1 | blau |
-| 2 | grün |
-| 3 | violett |
-| 4 | rot |
-| 5 | gelb |
-| 6 | türkis |
-| 7 | weiß |
-
-Das Ausgabeformat der Daten ist als `application/json` festgelegt. Die Schnittstelle soll folgende Endpunkte anbieten:
-
-**GET** /persons
-```json
-[{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-},{
-"id" : 2,
-...
-}]
+First, build:
+```bash
+docker-compose build
 ```
 
-**GET** /persons/{id}
-
-*Hinweis*: als **ID** kann hier die Zeilennummer verwendet werden.
-```json
-{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-}
+Then run:
+```bash
+docker-compose up
 ```
 
-**GET** /persons/color/{color}
-```json
-[{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-},{
-"id" : 2,
-...
-}]
+Or build and run:
+```bash
+docker-compose up --build
 ```
 
-## Akzeptanzkriterien
+The build just creates an Angular image. After everything started, the frontend can be visited at http://localhost:4200 from the browser. The backend will run at http://localhost:8080.
 
-1. Die CSV Datei wurde eingelesen, und wird programmintern durch eine dem Schema entsprechende Modellklasse repräsentiert.
-2. Der Zugriff auf die Datensätze soll so abstrahiert werden, dass eine andere Datenquelle angebunden werden kann, ohne den Aufruf anpassen zu müssen.
-3. Die oben beschriebene REST-Schnittstelle wurde implementiert und liefert die korrekten Antworten.
-4. Der Zugriff auf die Datensätze, bzw. auf die zugreifende Klasse wird über Dependency Injection gehandhabt.
-5. Die REST-Schnittstelle ist mit Unit-Tests getestet. 
-6. Die `sample-input.csv` wurde nicht verändert. 
-7. Die Daten werden in der Webanwedung visualisiert.
-8. Responsive Design wurde berücksichtigt.
+### Manually
+To run the project manually, the frontend and the backend need to be started separately.
 
-## Bonuspunkte
-* Implementiere eine zusätzliche Methode POST/ Personen mit Anbindung an ein Formular zur Erstellung neuer Einträge.
-* Implementierung als MSBuild Projekt für kontinuierliche Integration auf TFS (C#/.NET) oder als Maven/Gradle Projekt (Java).
-* Anbindung einer zweiten Datenquelle (z.B. Datenbank via Entity Framework).
+#### Backend
+Prerequisites:
+- Java
+  - openjdk 23.0.1 was used while developing the project
 
-Denk an deine zukünftigen Kolleg:innen und mach es ihnen nicht zu einfach, indem du deine Lösung öffentlich zur Schau stellst. Danke & viel Spaß!
+Run:\
+To run the backend, use a console to navigate into the `code-challenge-backend` directory. Afterwards run this:
+```bash
+./gradlew run
+```
 
+#### Frontend
+Prerequisites:
+- NodeJS
+  - Version 22.11.0 was used while developing the project
+- Angular (Installed by `npm install -g @angular/cli`)
+  - Version 19.0.4 was used while developing the project
+
+Run:\
+To run the backend, use a console to navigate into the `code-challenge-backend` directory. Afterwards run this:
+```bash
+npm install
+ng serve
+```
+
+## Backend Unit Tests
+For prerequisites without Docker, refer for the prerequisites for the backend above.
+
+To run the backend unit tests, one can...
+- use a console to navigate into the `code-challenge-backend` directory and run `gradlew test`
+- import the project into Intellij, navigate to `src/test/java/RestHandlerTest` and run the tests
+- run this for Docker Compose:
+```
+docker-compose up -d backend
+docker exec -ti code-challenge_backend_1 ./gradlew test
+docker-compose down
+```
+The name `code-challenge_backend_1` may be different. Check with `docker ps`.
+
+## Troubleshooting
+Please make sure, that these directories are not present when first running the project:
+- `code-challenge-backend/.gradle`
+- `code-challenge-backend/build`
+- `code-challenge-frontend/angular/cache`

@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: docker.io/gradle:jdk23
+    volumes:
+      - ./code-challenge-backend:/app
+    working_dir: /app
+    command: ["./gradlew", "run"]
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./code-challenge-frontend
+      dockerfile: Dockerfile
+    image: angular:latest
+    expose:
+      - 4200
+    volumes:
+      - ./code-challenge-frontend:/app
+    working_dir: /app
+    command: ["sh", "-c", "npm install && ng serve --host 0.0.0.0 --port 4200"]
+    ports:
+      - "4200:4200"
+

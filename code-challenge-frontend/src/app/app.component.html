@@ -1,0 +1,7 @@
+<main>
+  <app-notification />
+  <div class="main-container">
+      <app-persons (emitCurrentPerson)="setCurrentPerson($event)" class="root-container" />
+      <app-details [currentPerson]="currentPerson()" class="root-container" />
+  </div>
+</main>
